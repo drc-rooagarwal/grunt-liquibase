@@ -19,13 +19,13 @@ module.exports = function(grunt) {
 // Please see the Grunt documentation for more information regarding task
 // creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('liquibase', 'Simple integration of liquibase with grunt - specifically for postgresql', function() {
+  grunt.registerMultiTask('liquibase', 'Simple integration of liquibase with grunt - specifically for jtds', function() {
     var cb = this.async();
     // merge defaults with the passed in options
     var options = this.options({
       changeLogFile : 'changelog.xml',
-      classpath : path.join(__dirname, '..', 'lib', 'postgresql-9.4-1206-jdbc41.jar'),
-      driver : 'org.postgresql.Driver',
+      classpath : path.join(__dirname, '..', 'db', 'jtds-1.3.1.jar'),
+      driver : 'net.sourceforge.jtds.jdbc.Driver',
       defaultSchemaName : null,
       logLevel: 'info',
       defaultsFile: null
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
       "tag"
     ];
 
-    var liquibaseJarLocation = path.join(__dirname, '..', 'lib', 'liquibase.jar');
+    var liquibaseJarLocation = path.join(__dirname, '..', 'liquibase', 'liquibase.jar');
     var liquibaseCommand = 'java -jar ' + liquibaseJarLocation;
     var optionName;
 

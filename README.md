@@ -1,6 +1,6 @@
 # grunt-liquibase  [![Build Status](https://travis-ci.org/cgreening/grunt-liquibase.svg?branch=master)](https://travis-ci.org/cgreening/grunt-liquibase) [![Code Climate](https://codeclimate.com/github/cgreening/grunt-liquibase/badges/gpa.svg)](https://codeclimate.com/github/cgreening/grunt-liquibase) [![Issue Count](https://codeclimate.com/github/cgreening/grunt-liquibase/badges/issue_count.svg)](https://codeclimate.com/github/cgreening/grunt-liquibase)
 
-> Simple integration of liquibase with grunt - specifically for postgresql (the postgresql jdbc driver is bundled as part of the module - if you want to add more support then feel free to fork)
+> Simple integration of liquibase with grunt - specifically for jtds (the jtds jdbc driver is bundled as part of the module - if you want to add more support then feel free to fork)
 
 ## Getting Started
 This plugin requires Grunt `~0.4.2`
@@ -28,7 +28,7 @@ grunt.initConfig({
     options: {
       username : 'DB_USERNAME',
       password : 'DB_PASSWORD',
-      url : 'jdbc:postgresql://DB_HOST:DB_PORT/DB_NAME'
+      url : 'jdbc:jtds:sqlserver://DB_HOST:DB_PORT/DB_CATALOG;instance=DB_INSTANCE;domain=DB_DOMAIN'
     },
     update: {
       command: 'update'
@@ -53,8 +53,8 @@ grunt liquibase:update --no-write --verbose
 Produces:
 ```shell
 ...
-Will excecute:update
-Command: java -jar /Users/grunt-liquibase/lib/liquibase.jar --classpath /Users/grunt-liquibase/lib/postgresql-9.3-1100.jdbc41.jar --driver org.postgresql.Driver --logLevel info --username test_username --password test_password --url jdbc:postgresql://DB_HOST:DB_PORT/DB_NAME --changeLogFile changelog.xml update
+Will execute:update
+Command: java -jar /Users/grunt-liquibase/lib/liquibase.jar --classpath /Users/grunt-liquibase/lib/jtds-1.3.1.jar --driver net.sourceforge.jtds.jdbc.Driver --logLevel info --username test_username --password test_password --url jdbc:jtds:sqlserver://DB_HOST:DB_PORT/DB_CATALOG;instance=DB_INSTANCE;domain=DB_DOMAIN --changeLogFile changelog.xml update
 >> no-write specified, not running command
 ```
 
@@ -87,13 +87,13 @@ Path to the changelog file for liquibase.
 
 #### options.classpath
 Type: `String`
-Default value: `postgresql-9.3-1100.jdbc41.jar`
+Default value: `jtds-1.3.1.jar`
 
-Path to the jar file containing the jdbc driver. The module contains this jar file so you don't need it if you are talking to a postgresql database. Passed into the `--classpath` argument to liquibase.
+Path to the jar file containing the jdbc driver. The module contains this jar file so you don't need it if you are talking to a SQLServer or Sybase database. Passed into the `--classpath` argument to liquibase.
 
 #### options.driver
 Type: `String`
-Default value: `org.postgresql.Driver`
+Default value: `net.sourceforge.jtds.jdbc.Driver`
 
 JDBC driver class. Passed into the `--driver` argument to liquibase.
 
@@ -135,7 +135,7 @@ grunt.initConfig({
     options: {
       username : 'dbuser',
       password : 'passwd',
-      url : 'jdbc:postgresql://localhost:5432/test_db'
+      url : 'jdbc:jtds:sqlserver://localhost:1433/test_catalog;instance=test;domain=test_domain'
     },
     rollback: {
       command: 'rollback',
@@ -157,7 +157,7 @@ grunt.initConfig({
     options: {
       username : 'dbuser',
       password : 'passwd',
-      url : 'jdbc:postgresql://localhost:5432/test_db'
+      url : 'jdbc:jtds:sqlserver://localhost:1433/test_catalog;instance=test;domain=test_domain'
     },
     rollback: {
       command: 'rollbackCount',
@@ -179,7 +179,7 @@ grunt.initConfig({
     options: {
       username : 'dbuser',
       password : 'passwd',
-      url : 'jdbc:postgresql://localhost:5432/test_db'
+      url : 'jdbc:jtds:sqlserver://localhost:1433/test_catalog;instance=test;domain=test_domain'
     },
     tag: {
       command: 'tag',
@@ -209,7 +209,7 @@ grunt.initConfig({
     options: {
       username : 'dbuser',
       password : 'passwd',
-      url : 'jdbc:postgresql://localhost:5432/test_db'
+      url : 'jdbc:jtds:sqlserver://localhost:1433/test_catalog;instance=test;domain=test_domain'
     },
     command: 'update'
   },
@@ -225,7 +225,7 @@ grunt.initConfig({
     options: {
       username : 'dbuser',
       password : 'passwd',
-      url : 'jdbc:postgresql://localhost:5432/test_db',
+      url : 'jdbc:jtds:sqlserver://localhost:1433/test_catalog;instance=test;domain=test_domain'
       changelog : 'src/database/dbchangelog.xml'
     },
     command: 'update'
